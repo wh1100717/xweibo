@@ -3,7 +3,7 @@
 from weibo import APIClient
 import urllib2,urllib
 import datetime
-import Config
+import settings
 def get_client():
     LOGIN_INFO=Config.LOGIN_INFO
     client = APIClient(app_key=LOGIN_INFO['APP_KEY'], app_secret=LOGIN_INFO['APP_SECRET'], redirect_uri=LOGIN_INFO['CALLBACK_URL'])
