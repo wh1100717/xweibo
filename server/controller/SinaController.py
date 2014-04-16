@@ -10,7 +10,8 @@ from dao import SinaDao
 
 urls = (
     '/user_show/(.*)','GetUserShow',
-    '/public_timeline/(.*)','GetPublic'
+    '/public_timeline/(.*)','GetPublic',
+    '/user_timeline/(.*)','GetUserIds'
 )
 
 class GetUserShow:
@@ -21,7 +22,7 @@ class GetUserShow:
 class GetPublic:
     def GET(self,count):
         client = WeiboUtil.get_client()
-        r = client.statuses.public_timeline.get(count = 2)
+        r = client.statuses.public_timeline.get(count)
         #a = json.dumps(r['statuses'])
         print len(r['statuses'])
    
@@ -39,5 +40,59 @@ class GetPublic:
             user_info_lists.append(tmp['user_id'],tmp['screen_name'],tmp['city_name'],tmp['followers_count'],tmp['friends_count'],tmp['statuses_count'])
 
         return sinaDao.save_user_info(user_info_lists)
+#user_timeline.get()获取某一用户发过的微薄id
+#get_repost_timeline()获取微薄转发后的微薄id
+#get_comments_show()获取微薄评论者id
+class GetUserIds:
+    def GET(self,strscreen_name):
+        client = WeiboUtil.get_client()
+        ids = []
+        for i in range(1,21):
+            r = client.statuses.user_timeline.get(screen_name = strscreen_name,count = 100.page = i)
+            if len(r['statuses']) == 0:
+                break
+            ids.append(r['statuses'])
+        get_repost_timeline(ids)
+        get_comments_show(ids)
+
+#get_repost_timeline获取所有转发id
+def get_repost_timeline(strids):
+    client = WeiboUtil.get_client()
+    for strid in strids:
+        report_ids = []
+        for i in range(1,11):
+            r = client.statuses.repost_timeline.ids.get(id=strid,count = 200,page = i)
+            
+            if len(r['statuses']) == 0:
+                break
+            report_ids.append(r['statuses'])
+        get_info_by_id(report_ids)
+        get_comments_show(report_ids)
+        #如果没有转发id跳出 如果有继续
+        if len(report_ids) == 0:
+            break
+        else:
+            get_repost_timeline(report_ids)
+
+
+
+#get_comments_show通过id获取评论id
+def get_comments_show(comment_ids):
+    client = WeiboUtil.get_client()
+    for comment_id in comment_ids:
+        for i in range(1,41):
+            r = comments.show.get(id = comment_id,page = i,count = 50)
+            SinaDao.save_comment_user_info(r)
+
+
+            
+#get_info_by_id通过转发id获取用户id
+def get_info_by_id(report_ids):
+    client = WeiboUtil.get_client()
+    for report_id in report_ids:
+        r = client.statuses.show.get(report_id)
+        SinaDao.save_report_user_info(r)
+
+
 
 app = web.application(urls, locals())
