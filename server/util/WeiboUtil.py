@@ -5,7 +5,7 @@ import urllib2,urllib
 import datetime
 import settings
 def get_client():
-    LOGIN_INFO=Config.LOGIN_INFO
+    LOGIN_INFO=settings.LOGIN_INFO
     client = APIClient(app_key=LOGIN_INFO['APP_KEY'], app_secret=LOGIN_INFO['APP_SECRET'], redirect_uri=LOGIN_INFO['CALLBACK_URL'])
     starturl = client.get_authorize_url()
     cookies = urllib2.HTTPCookieProcessor()

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-  
-from util import SqliteUtil
+from util import MongodbUtil
 def save_weibo_info(weibo_info_lists):
 	SqliteUtil.checkTableExist()
 	sql="insert into weibo_info (text,created_data,reposts_count,comments_count,attitudes_count) values (?,?,?,?,?)"
