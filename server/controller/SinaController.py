@@ -11,8 +11,20 @@ from dao import SinaDao
 urls = (
     '/user_show/(.*)','GetUserShow',
     '/public_timeline/(.*)','GetPublic',
-    '/user_timeline/(.*)','GetUserIds'
+    '/user_timeline/(.*)','GetUserIds',
+    '/get_one_weibo/(.*)','GetOneWeibo'
 )
+#3706930306101099
+class GetOneWeibo:
+    def GET(self,weibo_id):
+        print weibo_id
+        ids = []
+        ids = [weibo_id]
+        client = WeiboUtil.get_client()
+        report_ids = get_repost_timeline(ids)
+        print report_ids
+        r = get_info_by_id(report_ids)
+        return r
 
 class GetUserShow:
     def GET(self,uid_info):
@@ -115,7 +127,7 @@ def get_comments_show(comment_ids):
 def get_info_by_id(report_ids):
     client = WeiboUtil.get_client()
     for report_id in report_ids:
-        r = client.statuses.show.get(report_id)
+        r = client.statuses.show.get(id = report_id)
         return r
         #SinaDao.save_report_user_info(r)
 
