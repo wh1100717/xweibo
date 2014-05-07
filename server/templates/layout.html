@@ -1,0 +1,66 @@
+$def with (content)
+<!DOCTYPE html>
+<html lang="en"><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Poly Spider Terminal</title>
+        <!-- Bootstrap core CSS -->
+        <link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <script src="../static/jquery-1.11.0.min.js"></script>
+        <!-- Just for debugging purposes. Don't actually copy this line! -->
+        <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+        <link href="../static/css/common.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Static navbar -->
+        <div class="navbar navbar-default navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/status/">Poly Spider</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+<!--                         <li id ='navi_home'><a href="/home/">Home</a></li>
+ -->                        <li id ='navi_status'><a href="/status/">Status</a></li>
+                        <li id ='navi_chart'><a href="/chart/">Chart</a></li>
+                        <li id ='navi_data'><a href="/data/platform:total">Data</a></li>
+                        <li id ='navi_log'><a href="/log/appchina">Log</a></li>
+                    </ul>
+                    <div class="text-right" style= "font-size:22px;margin-top:10px;">
+                        <a id="crawled_number"></a>
+                        <span id="crawled_number_span" style="display:none;">APPS Crawled</span>
+                    </div>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+        $:content
+        <footer>
+            <div class="copyright">
+                Copyright © 2013&nbsp;Poly Spider 
+            </div>
+            <ul class="footer-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </footer>
+        <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../static/js/json2.js"></script>
+        <script src="../static/js/common.js"></script>
+
+    </body>
+</html>

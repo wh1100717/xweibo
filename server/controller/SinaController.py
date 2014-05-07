@@ -7,34 +7,70 @@ from weibo import APIClient
 from util import WeiboUtil
 from dao import SinaDao
 
-
+render = web.template.render('templates/', base='layout')
+render_without_layout = web.template.render('templates/')
 urls = (
     '/user_show/(.*)','GetUserShow',
     '/public_timeline/(.*)','GetPublic',
     '/user_timeline/(.*)','GetUserIds',
-    '/get_one_weibo/(.*)','GetOneWeibo'
+    # '/get_one_weibo/(.*)','GetOneWeibo'
+    '/intimacy/(.*)','GetIntimacy',
+    '/care/','GetCare'
 )
 #3706930306101099
-class GetOneWeibo:
-    def GET(self,weibo_id):
-        print weibo_id
-        ids = []
-        ids = [weibo_id]
-        client = WeiboUtil.get_client()
-        report_ids = get_repost_timeline(ids)
-        print report_ids
-        r = get_info_by_id(report_ids)
-        return r
+# class GetOneWeibo:
+#     def GET(self,weibo_id):
+#         print weibo_id
+#         ids = []
+#         ids = [weibo_id]
+#         client = WeiboUtil.get_client()
+#         report_ids = get_repost_timeline(ids)
+#         print report_ids
+#         r = get_info_by_id(report_ids)
+#         return r
 
-class GetUserShow:
-    def GET(self,uid_info):
-        client = WeiboUtil.get_client()
-        r = client.users.show.get(uid=uid_info)
-        return json.dumps(r)
-class GetPublic:
-    def GET(self,strcount):
-        client = WeiboUtil.get_client()
-        r = client.statuses.public_timeline.get(count=strcount)
+#通过用户id获取该用户被转发的微博列表以及评论列表
+# class get_repost_by_user_id:
+#     def GET(self,uid):
+#         SinaDao.clean_db()
+#         client = WeiboUtil.get_client()
+#         r = client.statuses.user_timeline.get(uid=uid)
+#         weibo_ids = []
+#         for i in r['statuses']:
+#             weibo_ids.append(i['id'])
+#         print weibo_ids
+#         for weibo_id in weibo_ids:
+#             r1 = client.statuses.repost_timeline.get(id=weibo_id)
+#             SinaDao.save_user_info(r1['reposts'])
+#             print r1
+
+#     def get_comment_by_weibo_id(weibo_ids):
+
+class GetIntimacy:
+    def GET(self,uid):
+        SinaDao.clean_db()
+        weibo_id = WeiboUtil.get_weiboid_by_user_id(uid)
+        repost = WeiboUtil.get_repost_by_weiboid(weibo_id)
+        comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
+        SinaDao.repost_user_info(repost)
+        SinaDao.comment_user_info(comment)
+
+
+class GetCare:
+    def GET(self):
+        SinaDao.get_intimacy()
+        
+
+
+# class GetUserShow:
+#     def GET(self,uid_info):
+#         client = WeiboUtil.get_client()
+#         r = client.users.show.get(uid=uid_info)
+#         return json.dumps(r)
+# class GetPublic:
+#     def GET(self,strcount):
+#         client = WeiboUtil.get_client()
+#         r = client.statuses.public_timeline.get(count=strcount)
         #a = json.dumps(r['statuses'])
         # print len(r['statuses'])
    
@@ -52,7 +88,7 @@ class GetPublic:
         #     user_info_lists.append(tmp['user_id'],tmp['screen_name'],tmp['city_name'],tmp['followers_count'],tmp['friends_count'],tmp['statuses_count'])
 
         # return sinaDao.save_user_info(user_info_lists)
-        return r
+        # return r
 #user_timeline.get()获取某一用户发过的微薄id
 #get_repost_timeline()获取微薄转发后的微薄id
 #get_comments_show()获取微薄评论者id
