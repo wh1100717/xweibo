@@ -81,7 +81,6 @@ def friend_location(r):
 		}
 
 		LocationCollection.insert(location)
-	return location
 
 
 # def get_intimacy():
