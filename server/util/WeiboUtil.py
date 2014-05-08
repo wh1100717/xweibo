@@ -82,8 +82,14 @@ def get_comment_by_weiboid(weibo_id):
         comment = comment + r['comments']
     return comment
 
-def get_userinfo_by_screen_name(screen_name):
+def get_userinfo_by_screen_name(my_screen_name):
     client = get_client()
-    user_info = client.users.show.get(screen_name=screen_name)
+    user_info = client.users.show.get(screen_name=my_screen_name)
     return user_info
+
+def get_friend_location_by_screen_name(my_screen_name):
+    client = get_client()
+    friend_location = client.friendships.followers.get(screen_name=my_screen_name,count=200)
+    return friend_location
+
 

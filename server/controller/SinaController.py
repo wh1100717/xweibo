@@ -10,12 +10,14 @@ from dao import SinaDao
 render = web.template.render('templates/', base='layout')
 render_without_layout = web.template.render('templates/')
 urls = (
-    '/userinfo/(.*)','GetUserInfo',
-    '/public_timeline/(.*)','GetPublic',
-    '/user_timeline/(.*)','GetUserIds',
-    # '/get_one_weibo/(.*)','GetOneWeibo'
-    '/intimacy/(.*)','GetIntimacy',
-    '/care/','GetCare'
+    # '/userinfo/(.*)','GetUserInfo',
+    # '/public_timeline/(.*)','GetPublic',
+    # '/user_timeline/(.*)','GetUserIds',
+    # # '/get_one_weibo/(.*)','GetOneWeibo'
+    # '/intimacy/(.*)','GetIntimacy',
+    # '/care/','GetCare'
+    '/getuserinfo','GetUserInfo',
+    '/userinfo','SetUserInfo'
 )
 #3706930306101099
 # class GetOneWeibo:
@@ -46,21 +48,38 @@ urls = (
 
 #     def get_comment_by_weibo_id(weibo_ids):
 
-class GetUserInfo:
-    def GET(self,screen_name):
-        SinaDao.clean_db()
-        userinfo = WeiboUtil.get_userinfo_by_screen_name(screen_name)
-        return SinaDao.user_info(userinfo)
+class SetUserInfo:
+    def POST(self):
+        i = web.input()
+        SinaDao.clean_info_db()
+        userinfo = WeiboUtil.get_userinfo_by_screen_name(i.screen_name)
+        SinaDao.user_info(userinfo)
 
-
-class GetIntimacy:
-    def GET(self,uid):
-        SinaDao.clean_db()
-        weibo_id = WeiboUtil.get_weiboid_by_user_id(uid)
+        SinaDao.clean_use_db()
+        weibo_id = WeiboUtil.get_weiboid_by_user_id(userinfo['idstr'])
         repost = WeiboUtil.get_repost_by_weiboid(weibo_id)
         comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
         SinaDao.repost_user_info(repost)
         SinaDao.comment_user_info(comment)
+
+        SinaDao.clean_location_db()
+        friend_location = WeiboUtil.get_friend_location_by_screen_name(i.screen_name)
+        SinaDao.friend_location(friend_location)
+
+        return render.userinfo()
+class GetUserInfo:
+    def GET(self):
+        data = SinaDao.getmyinfo()
+        print data
+        return data
+# class GetIntimacy:
+#     def GET(self,uid):
+        # SinaDao.clean_use_db()
+        # weibo_id = WeiboUtil.get_weiboid_by_user_id(uid)
+        # repost = WeiboUtil.get_repost_by_weiboid(weibo_id)
+        # comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
+        # SinaDao.repost_user_info(repost)
+        # SinaDao.comment_user_info(comment)
         
 
 

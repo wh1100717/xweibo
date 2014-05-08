@@ -45,38 +45,38 @@ $ ->
 	return
  */
 
-$(function() {
-  var changeNum, crawled_number, timer;
-  crawled_number = $('#crawled_number');
-  timer = null;
-  changeNum = function() {
-    $.ajax({
-      url: "/api/app/get_app_count",
-      success: function(data) {
-        var count, new_n, old_n, time_interval;
-        data = eval(data)[0];
-        new_n = parseInt(data['count']);
-        old_n = crawled_number.html();
-        if (old_n === "") {
-          $('#crawled_number_span').fadeIn();
-          old_n = Math.max(Math.round(new_n * 0.9), new_n - 300);
-        } else {
-          old_n = parseInt(old_n);
-        }
-        count = 1;
-        time_interval = new_n - old_n;
-        if (time_interval > 0) {
-          timer = setInterval((function() {
-            crawled_number.html(old_n + count);
-            count += 1;
-          }), Math.round(6000 / time_interval));
-        }
-      }
-    });
-  };
-  changeNum();
-  setInterval((function() {
-    clearInterval(timer);
-    changeNum();
-  }), 6000);
-});
+// $(function() {
+//   var changeNum, crawled_number, timer;
+//   crawled_number = $('#crawled_number');
+//   timer = null;
+//   changeNum = function() {
+//     $.ajax({
+//       url: "/api/app/get_app_count",
+//       success: function(data) {
+//         var count, new_n, old_n, time_interval;
+//         data = eval(data)[0];
+//         new_n = parseInt(data['count']);
+//         old_n = crawled_number.html();
+//         if (old_n === "") {
+//           $('#crawled_number_span').fadeIn();
+//           old_n = Math.max(Math.round(new_n * 0.9), new_n - 300);
+//         } else {
+//           old_n = parseInt(old_n);
+//         }
+//         count = 1;
+//         time_interval = new_n - old_n;
+//         if (time_interval > 0) {
+//           timer = setInterval((function() {
+//             crawled_number.html(old_n + count);
+//             count += 1;
+//           }), Math.round(6000 / time_interval));
+//         }
+//       }
+//     });
+//   };
+//   changeNum();
+//   setInterval((function() {
+//     clearInterval(timer);
+//     changeNum();
+//   }), 6000);
+// });

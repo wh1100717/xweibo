@@ -6,7 +6,7 @@ from controller import SinaController
 render = web.template.render('templates/',base='layout')
 # render_without_layout = web.template.render('templates/')
 urls = (
-    '/api/sina',SinaController.app,
+    '/sina',SinaController.app,
     '/friends/', 'friend',
     '/userinfo/','userinfo',
     '/','home'

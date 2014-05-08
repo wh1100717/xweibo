@@ -3,6 +3,7 @@
 from util import MongodbUtil
 UserCollection = MongodbUtil.db.user
 InfoCollection = MongodbUtil.db.info
+LocationCollection = MongodbUtil.db.location
 # def save_weibo_info(weibo_info_lists):
 # 	SqliteUtil.checkTableExist()
 # 	sql="insert into weibo_info (text,created_data,reposts_count,comments_count,attitudes_count) values (?,?,?,?,?)"
@@ -65,6 +66,23 @@ def user_info(r):
 	}
 	InfoCollection.insert(info)
 	return info
+def getmyinfo():
+	data = InfoCollection.find_one()
+	return data
+
+def friend_location(r):
+	print len(r['users'])
+	for i in r['users']:
+		loc = i['location'].split(" ")[0] if i['location']!='' else '其他'
+		location = {
+			'idstr':i['idstr'],
+			'screen_name':i['screen_name'],
+			'location':loc
+		}
+
+		LocationCollection.insert(location)
+	return location
+
 
 # def get_intimacy():
 # 	user_infos = UserCollection.find()
@@ -81,5 +99,9 @@ def user_info(r):
 
 # 	return comment_intimacy
 
-def clean_db():
+def clean_use_db():
 	UserCollection.remove()
+def clean_info_db():
+	InfoCollection.remove()
+def clean_location_db():
+	LocationCollection.remove()
