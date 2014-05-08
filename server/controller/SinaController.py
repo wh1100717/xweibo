@@ -10,7 +10,7 @@ from dao import SinaDao
 render = web.template.render('templates/', base='layout')
 render_without_layout = web.template.render('templates/')
 urls = (
-    '/user_show/(.*)','GetUserShow',
+    '/userinfo/(.*)','GetUserInfo',
     '/public_timeline/(.*)','GetPublic',
     '/user_timeline/(.*)','GetUserIds',
     # '/get_one_weibo/(.*)','GetOneWeibo'
@@ -46,6 +46,13 @@ urls = (
 
 #     def get_comment_by_weibo_id(weibo_ids):
 
+class GetUserInfo:
+    def GET(self,screen_name):
+        SinaDao.clean_db()
+        userinfo = WeiboUtil.get_userinfo_by_screen_name(screen_name)
+        return SinaDao.user_info(userinfo)
+
+
 class GetIntimacy:
     def GET(self,uid):
         SinaDao.clean_db()
@@ -54,11 +61,6 @@ class GetIntimacy:
         comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
         SinaDao.repost_user_info(repost)
         SinaDao.comment_user_info(comment)
-
-
-class GetCare:
-    def GET(self):
-        SinaDao.get_intimacy()
         
 
 

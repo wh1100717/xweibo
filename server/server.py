@@ -3,16 +3,26 @@
 
 import web
 from controller import SinaController
-render = web.template.render('templates/')
+render = web.template.render('templates/',base='layout')
 # render_without_layout = web.template.render('templates/')
 urls = (
     '/api/sina',SinaController.app,
-    '/chart/', 'chart'
+    '/friends/', 'friend',
+    '/userinfo/','userinfo',
+    '/','home'
 )
 
-class chart:
+class friend:
     def GET(self):
-        return render.charts()
+        return render.friends()
+
+class home:
+	def GET(self):
+		return render.home()
+
+class userinfo:
+    def GET(self):
+        return render.userinfo()
 
 if __name__ == "__main__":
     app = web.application(urls, globals())

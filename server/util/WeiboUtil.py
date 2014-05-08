@@ -82,4 +82,8 @@ def get_comment_by_weiboid(weibo_id):
         comment = comment + r['comments']
     return comment
 
+def get_userinfo_by_screen_name(screen_name):
+    client = get_client()
+    user_info = client.users.show.get(screen_name=screen_name)
+    return user_info
 
