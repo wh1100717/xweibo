@@ -1,27 +1,17 @@
-root = exports ? this
 $ ->
 	$.ajax {
 		'type': 'get',
 		'contentType':'application/json',
 		'url': '/sina/getuserinfo',
 		'success': (data) ->
-			console.log data
 			data = data.replace(/u"/g,'"')
 			data = JSON.parse(data)
-			alert(typeof(data))
-			alert(data)
-			table_data = []
-			tmp = []
-			alert(data['idstr'])
-			tmp.push data['idstr']
-			tmp.push data['screen_name']
-			tmp.push data['location']
-			tmp.push data['followers_count']
-			tmp.push data['friends_count']
-			tmp.push data['statuses_count']
-			alert(tmp)
-			table_data.push tmp
-			$("#userinfo-list").dataTable().fnAddData table_data
+			$("#statuses_count").html(data.statuses_count)
+			$("#screen_name").html(data.screen_name)
+			$("#friends_count").html(data.friends_count)
+			$("#idstr").html(data.idstr)
+			$("#followers_count").html(data.followers_count)
+			$("#location").html(data.location)
 			return
 	}
 	return
