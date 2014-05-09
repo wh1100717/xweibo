@@ -5,8 +5,9 @@ $ ->
 		'contentType':'application/json',
 		'url': '/sina/getuserinfo',
 		'success': (data) ->
-			alert(data)
-			data = eval("(" + data + ")")
+			console.log data
+			data = data.replace(/u"/g,'"')
+			data = JSON.parse(data)
 			alert(typeof(data))
 			alert(data)
 			table_data = []

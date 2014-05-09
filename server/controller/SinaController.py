@@ -77,14 +77,8 @@ class GetUserInfo:
         print data
         result = {}
         for i in data:
-
-            if isinstance(data[i],int):
-                result[str(i)]=data[i]
-                
-            else:
-                result[str(i)]=data[i].replace('u\'','\'')
-            
-        return result
+            result[str(i)]=data[i]
+        return str(result).replace('\'','\"')
 class GetFriendsLoc:
     def GET(self):
         loc_lists = SinaDao.getfriendlocinfo()

@@ -10,8 +10,9 @@ $(function() {
     'url': '/sina/getuserinfo',
     'success': function(data) {
       var table_data, tmp;
-      alert(data);
-      data = eval("(" + data + ")");
+      console.log(data);
+      data = data.replace(/u"/g, '"');
+      data = JSON.parse(data);
       alert(typeof data);
       alert(data);
       table_data = [];
