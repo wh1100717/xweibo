@@ -4,12 +4,27 @@ var root;
 root = typeof exports !== "undefined" && exports !== null ? exports : this;
 
 $(function() {
-  return $.ajax({
+  $.ajax({
     'type': 'get',
     'url': '/sina/getuserinfo',
     'success': function(data) {
+      var table_data, tmp;
+      alert(typeof data);
       console.log(data);
-      return alert(data);
+      alert(typeof data);
+      alert(data);
+      table_data = [];
+      tmp = [];
+      alert(data['idstr']);
+      tmp.push(data['idstr']);
+      tmp.push(data['screen_name']);
+      tmp.push(data['location']);
+      tmp.push(data['followers_count']);
+      tmp.push(data['friends_count']);
+      tmp.push(data['statuses_count']);
+      alert(tmp);
+      table_data.push(tmp);
+      $("#userinfo-list").dataTable().fnAddData(table_data);
     }
   });
 });

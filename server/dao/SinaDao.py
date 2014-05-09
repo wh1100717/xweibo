@@ -67,7 +67,7 @@ def user_info(r):
 	InfoCollection.insert(info)
 	return info
 def getmyinfo():
-	data = InfoCollection.find_one()
+	data = InfoCollection.find_one({},{'_id':0})
 	return data
 
 def friend_location(r):
@@ -82,7 +82,15 @@ def friend_location(r):
 
 		LocationCollection.insert(location)
 
-
+def getfriendlocinfo():
+	locs = LocationCollection.find({},{'location':1,'_id':0})
+	loc_list={}
+	for i in locs:
+		if loc_list.has_key(i['location']):
+			loc_list[i['location']]+=1
+		else:
+			loc_list[i['location']]=1
+	return loc_list	
 # def get_intimacy():
 # 	user_infos = UserCollection.find()
 # 	for user_info in user_infos:

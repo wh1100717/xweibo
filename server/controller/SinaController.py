@@ -6,7 +6,10 @@ import json
 from weibo import APIClient
 from util import WeiboUtil
 from dao import SinaDao
+import sys
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
 render = web.template.render('templates/', base='layout')
 render_without_layout = web.template.render('templates/')
 urls = (
@@ -17,7 +20,8 @@ urls = (
     # '/intimacy/(.*)','GetIntimacy',
     # '/care/','GetCare'
     '/getuserinfo','GetUserInfo',
-    '/userinfo','SetUserInfo'
+    '/userinfo','SetUserInfo',
+    '/getfriendsloc','GetFriendsLoc'
 )
 #3706930306101099
 # class GetOneWeibo:
@@ -71,7 +75,24 @@ class GetUserInfo:
     def GET(self):
         data = SinaDao.getmyinfo()
         print data
-        return data
+        result = {}
+        for i in data:
+
+            if isinstance(data[i],int):
+                result[str(i)]=data[i]
+                
+            else:
+                result[str(i)]=data[i].replace('u\'','\'')
+            
+        return result
+class GetFriendsLoc:
+    def GET(self):
+        loc_lists = SinaDao.getfriendlocinfo()
+        result = '['
+        for i in loc_lists:
+            result += "['"+ i + "'," + str(loc_lists[i])+ "],"
+        result=result[:-1] + ']'
+        return result
 # class GetIntimacy:
 #     def GET(self,uid):
         # SinaDao.clean_use_db()
