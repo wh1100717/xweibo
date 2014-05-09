@@ -19,6 +19,7 @@ urls = (
     # # '/get_one_weibo/(.*)','GetOneWeibo'
     # '/intimacy/(.*)','GetIntimacy',
     # '/care/','GetCare'
+    '/getfriend','GetFriend',
     '/getuserinfo','GetUserInfo',
     '/userinfo','SetUserInfo',
     '/getfriendsloc','GetFriendsLoc'
@@ -87,6 +88,16 @@ class GetFriendsLoc:
             result += "['"+ i + "'," + str(loc_lists[i])+ "],"
         result=result[:-1] + ']'
         return result
+class GetFriend:
+    def GET(self):
+        friend_infos = SinaDao.getfriendinfo()
+        result = '['
+        for i in friend_infos:
+            # if i['Repost_Intimacy']+i['Req']
+            result += "['"+ str(i['screen_name']) + "'," +str(i['Repost_Intimacy'])+","+str(i['Comment_Intimacy'])+"],"
+        result=result[:-1] + ']'
+        return str(result).replace('\'','\"')
+
 # class GetIntimacy:
 #     def GET(self,uid):
         # SinaDao.clean_use_db()

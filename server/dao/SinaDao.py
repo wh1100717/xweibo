@@ -91,6 +91,9 @@ def getfriendlocinfo():
 		else:
 			loc_list[i['location']]=1
 	return loc_list	
+def getfriendinfo():
+	return UserCollection.find({},{'_id':0,'screen_name':1,'Repost_Intimacy':1,'Comment_Intimacy':1})
+
 # def get_intimacy():
 # 	user_infos = UserCollection.find()
 # 	for user_info in user_infos:

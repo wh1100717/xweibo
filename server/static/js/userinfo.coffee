@@ -4,6 +4,7 @@ $ ->
 		'contentType':'application/json',
 		'url': '/sina/getuserinfo',
 		'success': (data) ->
+			alert(data)
 			data = data.replace(/u"/g,'"')
 			data = JSON.parse(data)
 			$("#statuses_count").html(data.statuses_count)

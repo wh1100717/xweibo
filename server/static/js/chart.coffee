@@ -36,6 +36,23 @@ $ ->
             }
             return            
     }
+    $.ajax {
+        'type': 'get',
+        'contentType':'application/json',
+        'url': '/sina/getfriend',
+        'success': (data) ->
+            alert(data)
+            data = eval(data)
+            
+            # data = data.replace(/u"/g,'"')
+            # data = JSON.parse(data)
+            # alert(date)
+            tmp = ""
+            for i in data
+                tmp = tmp+"<tr><th>"+i[0]+"</th><td>"+i[1]+"</td><td>"+i[2]+"</td></tr>"
+            $("#datatable").html("<thead><tr><th></th><th>转发数</th><th>评论数</th></tr></thead><tbody>"+tmp+"</tbody>")    
+            return
+    }
     #平台数据饼状图Ajax初始化
     # $.ajax {
     #     'type': 'get',

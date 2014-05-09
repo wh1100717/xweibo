@@ -45,4 +45,20 @@ $(function() {
       });
     }
   });
+  $.ajax({
+    'type': 'get',
+    'contentType': 'application/json',
+    'url': '/sina/getfriend',
+    'success': function(data) {
+      var i, tmp, _i, _len;
+      alert(data);
+      data = eval(data);
+      tmp = "";
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        i = data[_i];
+        tmp = tmp + "<tr><th>" + i[0] + "</th><td>" + i[1] + "</td><td>" + i[2] + "</td></tr>";
+      }
+      $("#datatable").html("<thead><tr><th></th><th>转发数</th><th>评论数</th></tr></thead><tbody>" + tmp + "</tbody>");
+    }
+  });
 });
