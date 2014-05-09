@@ -65,7 +65,7 @@ class SetUserInfo:
         comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
         SinaDao.repost_user_info(repost)
         SinaDao.comment_user_info(comment)
-
+        
         SinaDao.clean_location_db()
         friend_location = WeiboUtil.get_friend_location_by_screen_name(i.screen_name)
         SinaDao.friend_location(friend_location)
