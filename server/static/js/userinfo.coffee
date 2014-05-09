@@ -2,10 +2,11 @@ root = exports ? this
 $ ->
 	$.ajax {
 		'type': 'get',
+		'contentType':'application/json',
 		'url': '/sina/getuserinfo',
 		'success': (data) ->
-			alert(typeof(data))
-			console.log data
+			alert(data)
+			data = eval("(" + data + ")")
 			alert(typeof(data))
 			alert(data)
 			table_data = []
