@@ -50,19 +50,23 @@ def get_client():
 #    r = client.users.show.get(uid=1621200391)
 #    print json.dumps(r, ensure_ascii=False)   
 
-def get_weiboid_by_user_id(uid):
+def get_weibo_by_user_id(uid):
     client = get_client()
     r = client.statuses.user_timeline.get(uid=uid)
-    weibo_id = []
-    for i in r['statuses']:
-        weibo_id.append(i['id'])
-    return weibo_id
+    # weibo_id = []
+    # for i in r['statuses']:
+    #     weibo_id.append(i['id'])
+    return r
     # print weibo_ids
     # for weibo_id in weibo_ids:
     #     r1 = client.statuses.repost_timeline.get(id=weibo_id)
     #     SinaDao.save_user_info(r1['reposts'])
     #     print r1
-
+def get_weibo_id(r):
+    weibo_id = []
+    for i in r['statuses']:
+        weibo_id.append(i['id'])
+    return r
 def get_repost_by_weiboid(weibo_id):
     client = get_client()
     repost = []

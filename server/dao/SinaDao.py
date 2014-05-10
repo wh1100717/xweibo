@@ -4,6 +4,7 @@ from util import MongodbUtil
 UserCollection = MongodbUtil.db.user
 InfoCollection = MongodbUtil.db.info
 LocationCollection = MongodbUtil.db.location
+UserWeiboCollection = MongodbUtil.db.userweibo
 # def save_weibo_info(weibo_info_lists):
 # 	SqliteUtil.checkTableExist()
 # 	sql="insert into weibo_info (text,created_data,reposts_count,comments_count,attitudes_count) values (?,?,?,?,?)"
@@ -94,6 +95,15 @@ def getfriendlocinfo():
 def getfriendinfo():
 	return UserCollection.find({},{'_id':0,'screen_name':1,'Repost_Intimacy':1,'Comment_Intimacy':1})
 
+def save_weibo_info(r):
+	for i in r['statuses']:
+		weibo_info={
+			'text':i['text'],
+			'create_time':i['created_at']
+			}
+		UserWeiboCollection.insert(weibo_info)
+def getweibo():
+	return UserWeiboCollection.find({},{'_id':0})
 # def get_intimacy():
 # 	user_infos = UserCollection.find()
 # 	for user_info in user_infos:

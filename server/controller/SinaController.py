@@ -7,6 +7,9 @@ from weibo import APIClient
 from util import WeiboUtil
 from dao import SinaDao
 import sys
+from util import StringUtil
+from datetime import datetime,timedelta
+import jieba.analyse
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -61,7 +64,9 @@ class SetUserInfo:
         SinaDao.user_info(userinfo)
 
         SinaDao.clean_use_db()
-        weibo_id = WeiboUtil.get_weiboid_by_user_id(userinfo['idstr'])
+        r = WeiboUtil.get_weibo_by_user_id(userinfo['idstr'])
+        SinaDao.save_weibo_info(r)
+        weibo_id = WeiboUtil.get_weibo_id(r)
         repost = WeiboUtil.get_repost_by_weiboid(weibo_id)
         comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
         SinaDao.repost_user_info(repost)
@@ -97,7 +102,28 @@ class GetFriend:
             result += "['"+ str(i['screen_name']) + "'," +str(i['Repost_Intimacy'])+","+str(i['Comment_Intimacy'])+"],"
         result=result[:-1] + ']'
         return str(result).replace('\'','\"')
-
+#获取了一周的微薄 返回值里面包含创建时间和微薄内容
+class GetweekWeibo:
+    def GET(self):
+        now_time = datetime.now()
+        week_ago = now_time - timedelta(7)
+        weibo_lists = SinaDao.getweibo()
+        time = str(week_ago).split(' ')[0].split('-')
+        new_weibo_lists=[]
+        for weibo_list in weibo_lists:
+            weibo_time = weibo_list['created_at'].split(' ')
+            if  int(weibo_list[5])>=int(time[0]) and int(weibo_list[2])>=int(time[2]) and StringUtil.converttime(weibo_list[1])>=int(time[1]):
+                new_weibo_lists.append(weibo_list)
+        return new_weibo_lists
+#通过jieba进行分词 返回一个dict，里面是分词的结果，返回出现次数最多的10个单词 返回类型为list
+def jiebafenci(new_weibo_lists):
+    hot_words={}
+    text=[]
+    for new_weibo_list in new_weibo_lists:
+        text.append(new_weibo_list['text'])
+    all_text=','.join(text)
+    tags = jieba.analyse.extract_tags(b, topK=10)
+    return tags
 # class GetIntimacy:
 #     def GET(self,uid):
         # SinaDao.clean_use_db()
