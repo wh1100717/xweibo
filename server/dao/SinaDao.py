@@ -26,10 +26,10 @@ def repost_user_info(r):
 			'screen_name' : i['user']['screen_name']
 		}
 		user_info = UserCollection.find_one({'idstr':i['user']['idstr']})
-		# print user_info
+		print user_info
 		if user_info != None:
 			user_info['Repost_Intimacy'] = user_info['Repost_Intimacy']+1
-			user_info['Comment_Intimacy'] = 0
+			# user_info['Comment_Intimacy'] = 0
 			UserCollection.update({'idstr':i['user']['idstr']},{"$set":user_info})
 		else:
 			user['Repost_Intimacy'] = 1
@@ -43,7 +43,7 @@ def comment_user_info(r):
 			'idstr':i['user']['idstr'],
 			'screen_name':i['user']['screen_name']
 		}
-		user_info = UserCollection.find_one({'idstr':i['user']['idstr']})
+		user_info = UserCollection.find_one({'idstr':i['user']['idstr']},{'_id':0})
 		if user_info == None:
 			user['Comment_Intimacy'] = 1
 			user['Repost_Intimacy'] = 0

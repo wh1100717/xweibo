@@ -5,10 +5,81 @@ $(function() {
     'contentType': 'application/json',
     'url': '/sina/getfriend',
     'success': function(data) {
-      data = data.replace(/u"/g, '"');
-      data = JSON.parse(data);
       alert(data);
+      alert('---');
+      data = eval(data);
+      alert(data[0]);
+      $('#container').highcharts({
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'reposr and commite chart'
+        },
+        xAxis: {
+          categories: data[0]
+        },
+        yAxis: {
+          title: {
+            text: 'counts'
+          }
+        },
+        series: [
+          {
+            name: 'reports',
+            data: data[1]
+          }, {
+            name: 'commites',
+            data: data[2]
+          }
+        ]
+      });
     }
   });
-  return;
+  $.ajax({
+    'type': 'get',
+    'url': '/sina/getfriendsloc',
+    'success': function(data) {
+      alert(data);
+      $('#container-platform').highcharts({
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false
+        },
+        title: {
+          text: '分类应用数据分析'
+        },
+        subtitle: {
+          text: 'PolySpider爬取应用所属分类饼状图'
+        },
+        tooltip: {
+          pointFormat: '{series.name.percent}: <b>{point.percentage:.1f}%</b><br>{series.name.count}: <b>{point.y}</b><br>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              color: '#000000',
+              connectorColor: '#000000',
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            },
+            showInLegend: true
+          }
+        },
+        series: [
+          {
+            type: 'pie',
+            name: {
+              'percent': '百分比',
+              'count': '应用数'
+            },
+            data: eval(data)
+          }
+        ]
+      });
+    }
+  });
 });

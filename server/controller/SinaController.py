@@ -100,15 +100,28 @@ class GetFriendsLoc:
 #获取用户粉丝转发和评论用户微博数
 class GetFriend:
     def GET(self):
+        print '+++++++='
         friend_infos = SinaDao.getfriendinfo()
         print friend_infos
-        result = '['
+        name = '['
+        reports = '['
+        commites = '['
+        
+        
+        
         for i in friend_infos:
+            print i
             # if i['Repost_Intimacy']+i['Req']
-            result += "['"+ str(i['screen_name']) + "'," +str(i['Repost_Intimacy'])+","+str(i['Comment_Intimacy'])+"],"
+            name += "'"+str(i['screen_name']) +"',"
+            reports += str(i['Repost_Intimacy'])+","
+            commites += str(i['Comment_Intimacy'])+","
             # result += "{'screen_name':i['screen_name'],'reposts_count':i['Repost_Intimacy'],'comments_count':i['Comment_Intimacy']},"
-        result=result[:-1] + ']'
-        return str(result).replace('\'','\"')
+        name=name[:-1] + ']'
+        reports=reports[:-1] + ']'
+        commites=commites[:-1] + ']'
+        result='['+name+','+reports+','+commites+']'
+        print result
+        return result
 #获取了一周的微薄 返回值里面包含创建时间和微薄内容
 class GetweekWeibo:
     def GET(self):
