@@ -31,6 +31,14 @@ $ ->
                 data: data[2]
             }]
             } 
+            tmp = ""
+            alert(data[0].length)
+            for i in [0..(data[0].length-1)]
+
+                    tmp = tmp+"<tr><th>"+data[0][i]+"</th><td>"+data[1][i]+"</td><td>"+data[2][i]+"</td></tr>"
+            
+            $("#datatable").html("<thead><tr><th>姓名</th><th>转发数</th><th>评论数</th></tr></thead><tbody>"+tmp+"</tbody>")    
+ 
         #         chart: {
         #             type: 'column'                         
         #         },
@@ -78,6 +86,7 @@ $ ->
                     }
                 ]
             }
+
             return        
     }
     # $.ajax {

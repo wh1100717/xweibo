@@ -5,6 +5,7 @@ $(function() {
     'contentType': 'application/json',
     'url': '/sina/getfriend',
     'success': function(data) {
+      var i, tmp, _i, _ref;
       alert(data);
       alert('---');
       data = eval(data);
@@ -34,6 +35,12 @@ $(function() {
           }
         ]
       });
+      tmp = "";
+      alert(data[0].length);
+      for (i = _i = 0, _ref = data[0].length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        tmp = tmp + "<tr><th>" + data[0][i] + "</th><td>" + data[1][i] + "</td><td>" + data[2][i] + "</td></tr>";
+      }
+      $("#datatable").html("<thead><tr><th>姓名</th><th>转发数</th><th>评论数</th></tr></thead><tbody>" + tmp + "</tbody>");
     }
   });
   $.ajax({
