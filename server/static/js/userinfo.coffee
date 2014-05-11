@@ -7,6 +7,7 @@ $ ->
 			alert(data)
 			data = data.replace(/u"/g,'"')
 			data = JSON.parse(data)
+			# alert(data)
 			$("#statuses_count").html(data.statuses_count)
 			$("#screen_name").html(data.screen_name)
 			$("#friends_count").html(data.friends_count)

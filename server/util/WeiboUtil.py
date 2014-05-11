@@ -66,7 +66,7 @@ def get_weibo_id(r):
     weibo_id = []
     for i in r['statuses']:
         weibo_id.append(i['id'])
-    return r
+    return weibo_id
 def get_repost_by_weiboid(weibo_id):
     client = get_client()
     repost = []

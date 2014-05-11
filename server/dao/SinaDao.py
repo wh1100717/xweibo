@@ -93,7 +93,8 @@ def getfriendlocinfo():
 			loc_list[i['location']]=1
 	return loc_list	
 def getfriendinfo():
-	return UserCollection.find({},{'_id':0,'screen_name':1,'Repost_Intimacy':1,'Comment_Intimacy':1})
+	data = UserCollection.find({},{'_id':0,'screen_name':1,'Repost_Intimacy':1,'Comment_Intimacy':1})
+	return data
 
 def save_weibo_info(r):
 	for i in r['statuses']:

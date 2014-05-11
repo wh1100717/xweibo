@@ -77,6 +77,9 @@ class SetUserInfo:
         SinaDao.friend_location(friend_location)
 
         return render.userinfo()
+        return render.repost()
+        return render.comment()
+#获取用户信息
 class GetUserInfo:
     def GET(self):
         data = SinaDao.getmyinfo()
@@ -85,6 +88,7 @@ class GetUserInfo:
         for i in data:
             result[str(i)]=data[i]
         return str(result).replace('\'','\"')
+#获取粉丝地理位置
 class GetFriendsLoc:
     def GET(self):
         loc_lists = SinaDao.getfriendlocinfo()
@@ -93,13 +97,16 @@ class GetFriendsLoc:
             result += "['"+ i + "'," + str(loc_lists[i])+ "],"
         result=result[:-1] + ']'
         return result
+#获取用户粉丝转发和评论用户微博数
 class GetFriend:
     def GET(self):
         friend_infos = SinaDao.getfriendinfo()
+        print friend_infos
         result = '['
         for i in friend_infos:
             # if i['Repost_Intimacy']+i['Req']
             result += "['"+ str(i['screen_name']) + "'," +str(i['Repost_Intimacy'])+","+str(i['Comment_Intimacy'])+"],"
+            # result += "{'screen_name':i['screen_name'],'reposts_count':i['Repost_Intimacy'],'comments_count':i['Comment_Intimacy']},"
         result=result[:-1] + ']'
         return str(result).replace('\'','\"')
 #获取了一周的微薄 返回值里面包含创建时间和微薄内容
