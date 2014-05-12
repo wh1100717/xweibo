@@ -46,6 +46,7 @@ SHOW_SQL = False #True则会在控制台显示详细的SQL查询
 
 __mongo_config__ = {
     # 'host': '10.0.2.72',
+    # 'host': '10.0.2.10',
     'host': '127.0.0.1',
     'port': 27017,
     'db': 'sina',
