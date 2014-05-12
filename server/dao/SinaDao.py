@@ -5,6 +5,7 @@ UserCollection = MongodbUtil.db.user
 InfoCollection = MongodbUtil.db.info
 LocationCollection = MongodbUtil.db.location
 UserWeiboCollection = MongodbUtil.db.userweibo
+NewestCollection = MongodbUtil.db.newest
 # def save_weibo_info(weibo_info_lists):
 # 	SqliteUtil.checkTableExist()
 # 	sql="insert into weibo_info (text,created_data,reposts_count,comments_count,attitudes_count) values (?,?,?,?,?)"
@@ -119,7 +120,12 @@ def getweibo():
 # 	comment_intimacy = user_info['Comment_Intimacy']
 
 # 	return comment_intimacy
-
+def save_newest_repost(newest_weibo_repost):
+	for i in newest_weibo_repost:
+		repost={'time':i['created_at']}
+		NewestCollection.insert(repost)
+def clean_newest_db():
+	NewestCollection.remove()
 def clean_use_db():
 	UserCollection.remove()
 def clean_info_db():

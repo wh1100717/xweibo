@@ -9,7 +9,9 @@ urls = (
     '/sina',SinaController.app,
     '/friends/', 'friend',
     '/userinfo/','userinfo',
-    '/','home'
+    '/','home',
+    '/micro-bo/','microbo',
+    '/influence/','influence'
 )
 
 class friend:
@@ -19,11 +21,16 @@ class friend:
 class home:
 	def GET(self):
 		return render.home()
+class influence:
+    def GET(self):
+        return render.influence()
 
 class userinfo:
     def GET(self):
         return render.userinfo()
-
+class microbo:
+    def GET(self):
+        return render.microbo()
 if __name__ == "__main__":
     app = web.application(urls, globals())
     app.internalerror = web.debugerror

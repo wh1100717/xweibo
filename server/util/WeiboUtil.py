@@ -95,5 +95,15 @@ def get_friend_location_by_screen_name(my_screen_name):
     client = get_client()
     friend_location = client.friendships.followers.get(screen_name=my_screen_name,count=200)
     return friend_location
-
+def trends_weekly():
+    
+    client = get_client()
+    r = client.trends.weekly.get()
+    topkey = []
+    topkey_lists=r['trends']
+    time = topkey_lists.keys()[0]
+    topkey_lists_by_time = topkey_lists[time]
+    for i in topkey_lists_by_time:
+        topkey.append(i['name'])
+    return topkey
 

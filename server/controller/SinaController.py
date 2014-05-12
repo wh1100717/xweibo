@@ -10,7 +10,7 @@ import sys
 from util import StringUtil
 from datetime import datetime,timedelta
 import jieba.analyse
-
+import random
 reload(sys)
 sys.setdefaultencoding('utf-8')
 render = web.template.render('templates/', base='layout')
@@ -25,7 +25,9 @@ urls = (
     '/getfriend','GetFriend',
     '/getuserinfo','GetUserInfo',
     '/userinfo','SetUserInfo',
-    '/getfriendsloc','GetFriendsLoc'
+    '/getfriendsloc','GetFriendsLoc',
+    '/getweekweibo','GetweekWeibo',
+    '/getrepostnum','GetrepostNum'
 )
 #3706930306101099
 # class GetOneWeibo:
@@ -67,6 +69,12 @@ class SetUserInfo:
         r = WeiboUtil.get_weibo_by_user_id(userinfo['idstr'])
         SinaDao.save_weibo_info(r)
         weibo_id = WeiboUtil.get_weibo_id(r)
+        
+        SinaDao.clean_newest_db()
+        newest_weibo_id = weibo_id[0]
+        newest_weibo_repost = WeiboUtil.get_repost_by_weiboid(newest_weibo_id)
+        SinaDao.save_newest_repost(newest_weibo_repost)
+        
         repost = WeiboUtil.get_repost_by_weiboid(weibo_id)
         comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
         SinaDao.repost_user_info(repost)
@@ -131,10 +139,22 @@ class GetweekWeibo:
         time = str(week_ago).split(' ')[0].split('-')
         new_weibo_lists=[]
         for weibo_list in weibo_lists:
-            weibo_time = weibo_list['created_at'].split(' ')
-            if  int(weibo_list[5])>=int(time[0]) and int(weibo_list[2])>=int(time[2]) and StringUtil.converttime(weibo_list[1])>=int(time[1]):
+            weibo_time = weibo_list['create_time'].split(' ')
+
+            #weibo_time[5] is year weibo_time[1] is month weibo_time[2] is day
+            if  int(weibo_time[5])==int(time[0]) and StringUtil.converttime(weibo_time[1])==int(time[1]) and int(weibo_time[2])>=int(time[2]) :
                 new_weibo_lists.append(weibo_list)
-        return new_weibo_lists
+            elif int(weibo_time[5])>int(time[0]) :
+                    new_weibo_lists.append(weibo_list)
+            elif int(weibo_time[5])==int(time[0]) and StringUtil.converttime(weibo_time[1])>int(time[1]):
+                new_weibo_lists.append(weibo_list)
+        result=[]
+        result.append([len(new_weibo_lists)])
+        result.append(jiebafenci(new_weibo_lists))
+        result.append(WeiboUtil.trends_weekly())
+        result = str(result).replace("u'","'")
+        
+        return result
 #通过jieba进行分词 返回一个dict，里面是分词的结果，返回出现次数最多的10个单词 返回类型为list
 def jiebafenci(new_weibo_lists):
     hot_words={}
@@ -142,7 +162,7 @@ def jiebafenci(new_weibo_lists):
     for new_weibo_list in new_weibo_lists:
         text.append(new_weibo_list['text'])
     all_text=','.join(text)
-    tags = jieba.analyse.extract_tags(b, topK=10)
+    tags = jieba.analyse.extract_tags(all_text, topK=10)
     return tags
 # class GetIntimacy:
 #     def GET(self,uid):
@@ -153,6 +173,9 @@ def jiebafenci(new_weibo_lists):
         # SinaDao.repost_user_info(repost)
         # SinaDao.comment_user_info(comment)
         
+class GetrepostNum:
+    def GET(self):
+        return random.random()
 
 
 # class GetUserShow:
