@@ -120,10 +120,13 @@ def getweibo():
 # 	comment_intimacy = user_info['Comment_Intimacy']
 
 # 	return comment_intimacy
-def save_newest_repost(newest_weibo_repost):
-	for i in newest_weibo_repost:
-		repost={'time':i['created_at']}
-		NewestCollection.insert(repost)
+def save_newest_repost(newest_weibo_id):
+
+	newest_weibo={'newest_weibo_id':newest_weibo_id}
+	NewestCollection.insert(newest_weibo)
+def get_newest_repost():
+	weibo_id=NewestCollection.find()[0]['newest_weibo_id']
+	return weibo_id
 def clean_newest_db():
 	NewestCollection.remove()
 def clean_use_db():

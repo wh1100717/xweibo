@@ -14,7 +14,7 @@ $ ->
 			marginRight: 20
 			events: {
 				load: ->
-					series = this.series[0]
+					series = this.series
 					setInterval ->
 						x = (new Date()).getTime()
 						$.ajax {
@@ -22,13 +22,16 @@ $ ->
 							'contentType': 'application/json'
 							'url': '/sina/getrepostnum'
 							'success': (data) ->
-								console.log data
-								data = parseFloat data
-								series.addPoint [x, data], true, true
+								
+								data = eval(data)
+								# console.log data
+								# data = parseFloat data
+								series[0].addPoint [x, parseInt data[0]], true, true
+								series[1].addPoint [x, parseInt data[1]], true, true
 								return
 						}
 						return
-					, 1000
+					, 600000
 					return
 
 			}
@@ -59,14 +62,18 @@ $ ->
 				"""
 		}
 		legend: {
-			enabled: false
+			enabled: true
 		}
 		exporting: {
 			enabled: false
 		}
 		series: [{
-			name: 'Random data'
+			name: 'comments'
 			data: initData()
-		}]
+		},{
+			name:'reposts'
+			data:initData()
+			}]
 	}
+
 	return

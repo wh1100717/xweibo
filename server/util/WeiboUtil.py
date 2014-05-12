@@ -107,3 +107,7 @@ def trends_weekly():
         topkey.append(i['name'])
     return topkey
 
+def statuses_count(weibo_id):
+    client = get_client()
+    r = client.statuses.count.get(ids=weibo_id)
+    return r

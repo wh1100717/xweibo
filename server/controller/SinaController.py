@@ -72,8 +72,8 @@ class SetUserInfo:
         
         SinaDao.clean_newest_db()
         newest_weibo_id = weibo_id[0]
-        newest_weibo_repost = WeiboUtil.get_repost_by_weiboid(newest_weibo_id)
-        SinaDao.save_newest_repost(newest_weibo_repost)
+        
+        SinaDao.save_newest_repost(newest_weibo_id)
         
         repost = WeiboUtil.get_repost_by_weiboid(weibo_id)
         comment = WeiboUtil.get_comment_by_weiboid(weibo_id)
@@ -175,7 +175,15 @@ def jiebafenci(new_weibo_lists):
         
 class GetrepostNum:
     def GET(self):
-        return random.random()
+        weibo_id = SinaDao.get_newest_repost()
+        r = WeiboUtil.statuses_count(weibo_id)[0]
+       
+        # r = WeiboUtil.statuses_count('3706902724217725')[0]
+        comments = int(r['comments'])
+        reposts = int(r['reposts'])
+
+        data = [[comments],[reposts]]
+        return data
 
 
 # class GetUserShow:

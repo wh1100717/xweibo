@@ -26,7 +26,7 @@ $(function() {
       events: {
         load: function() {
           var series;
-          series = this.series[0];
+          series = this.series;
           setInterval(function() {
             var x;
             x = (new Date()).getTime();
@@ -35,12 +35,12 @@ $(function() {
               'contentType': 'application/json',
               'url': '/sina/getrepostnum',
               'success': function(data) {
-                console.log(data);
-                data = parseFloat(data);
-                series.addPoint([x, data], true, true);
+                data = eval(data);
+                series[0].addPoint([x, parseInt(data[0])], true, true);
+                series[1].addPoint([x, parseInt(data[1])], true, true);
               }
             });
-          }, 1000);
+          }, 10000);
         }
       }
     },
@@ -69,14 +69,17 @@ $(function() {
       }
     },
     legend: {
-      enabled: false
+      enabled: true
     },
     exporting: {
       enabled: false
     },
     series: [
       {
-        name: 'Random data',
+        name: 'comments',
+        data: initData()
+      }, {
+        name: 'reposts',
         data: initData()
       }
     ]
