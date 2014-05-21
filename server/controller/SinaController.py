@@ -27,7 +27,8 @@ urls = (
     '/userinfo','SetUserInfo',
     '/getfriendsloc','GetFriendsLoc',
     '/getweekweibo','GetweekWeibo',
-    '/getrepostnum','GetrepostNum'
+    '/getrepostnum','GetrepostNum',
+    '/getinfluence','GetInfluence'
 )
 #3706930306101099
 # class GetOneWeibo:
@@ -82,15 +83,25 @@ class SetUserInfo:
         
         SinaDao.clean_location_db()
         friend_location = WeiboUtil.get_friend_location_by_screen_name(i.screen_name)
+        print friend_location
         SinaDao.friend_location(friend_location)
 
         return render.userinfo()
-        return render.repost()
-        return render.comment()
+        # return render.repost()
+        # return render.comment()
 #获取用户信息
 class GetUserInfo:
     def GET(self):
         data = SinaDao.getmyinfo()
+        if data['verified']:
+            data['verified'] = u'是'
+        else:
+            data['verified'] = u'否'
+
+        stime = data['created_at'].split(" ")
+        
+
+        data['created_at'] = str(stime[5])+u"年"+str(StringUtil.converttime(stime[1]))+u"月"+str(stime[2])+u"日"+StringUtil.convertweek(stime[0])+stime[3]
         print data
         result = {}
         for i in data:
@@ -290,6 +301,47 @@ def get_info_by_id(report_ids):
         r = client.statuses.show.get(id = report_id)
         return r
         #SinaDao.save_report_user_info(r)
+
+
+class GetInfluence:
+    def GET(self):
+        data = SinaDao.getmyinfo()
+        print data
+        repost_count = SinaDao.getfriendinfo()
+        print repost_count
+        reposts = '['
+        for i in repost_count:
+            reposts += str(i['Repost_Intimacy'])+","
+        reposts=reposts[:-1] + ']'
+
+        Ie = data['friends_count']*data['statuses_count']
+        Ic = len(reposts)
+        Ia = Ie + Ic
+        I = 0
+
+        influence = '{u"Ie":'+str(Ie)+',u"Ic":'+str(Ic)+',u"Ia":'+str(Ia)+',u"I":'+str(I)+'}'
+        print influence
+        return influence
+
+
+
+class GetUserInfo:
+    def GET(self):
+        data = SinaDao.getmyinfo()
+        if data['verified']:
+            data['verified'] = u'是'
+        else:
+            data['verified'] = u'否'
+
+        stime = data['created_at'].split(" ")
+        
+
+        data['created_at'] = str(stime[5])+u"年"+str(StringUtil.converttime(stime[1]))+u"月"+str(stime[2])+u"日"+StringUtil.convertweek(stime[0])+stime[3]
+        print data
+        result = {}
+        for i in data:
+            result[str(i)]=data[i]
+        return str(result).replace('\'','\"')
 
 
 

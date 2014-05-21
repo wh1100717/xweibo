@@ -15,22 +15,22 @@ $(function() {
           type: 'column'
         },
         title: {
-          text: 'reposr and commite chart'
+          text: '用户微博转发及评论情况'
         },
         xAxis: {
           categories: data[0]
         },
         yAxis: {
           title: {
-            text: 'counts'
+            text: '数量'
           }
         },
         series: [
           {
-            name: 'reports',
+            name: '转发数',
             data: data[1]
           }, {
-            name: 'commites',
+            name: '评论数',
             data: data[2]
           }
         ]
@@ -40,7 +40,7 @@ $(function() {
       for (i = _i = 0, _ref = data[0].length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         tmp = tmp + "<tr><th>" + data[0][i] + "</th><td>" + data[1][i] + "</td><td>" + data[2][i] + "</td></tr>";
       }
-      $("#datatable").html("<thead><tr><th>姓名</th><th>转发数</th><th>评论数</th></tr></thead><tbody>" + tmp + "</tbody>");
+      $("#datatable").html("<thead><tr><th>用户昵称</th><th>转发数</th><th>评论数</th></tr></thead><tbody>" + tmp + "</tbody>");
     }
   });
   $.ajax({
@@ -55,10 +55,10 @@ $(function() {
           plotShadow: false
         },
         title: {
-          text: '分类应用数据分析'
+          text: '粉丝地理位置分布'
         },
         subtitle: {
-          text: 'PolySpider爬取应用所属分类饼状图'
+          text: '地理位置分布情况饼状图'
         },
         tooltip: {
           pointFormat: '{series.name.percent}: <b>{point.percentage:.1f}%</b><br>{series.name.count}: <b>{point.y}</b><br>'
@@ -81,7 +81,7 @@ $(function() {
             type: 'pie',
             name: {
               'percent': '百分比',
-              'count': '应用数'
+              'count': '粉丝数'
             },
             data: eval(data)
           }

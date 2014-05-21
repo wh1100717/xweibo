@@ -1,13 +1,38 @@
-<div class ="data-container">
-    <h1>实时转发数据</h1>
-    <div id="container-status-realtime" style="height: 500px; min-width: 600px;padding-bottom: 50px;"></div>
+<div class="table-responsive">
+    <div class="container" style="width: 60%; text-align: center;">
+        <table id="user-influence" class="table table-bordered">
+            <thead>
+                <h2>用户影响力列表</h2>
+            </thead>
+            <tbody>
+                <tr>
+                    <th style="width: 50%;">
+                        <span style="display: block; text-align: center;">用户直接影响力(Ie)</span>
+                    </th>
+                    <td id="Ie"></td>
+                </tr>
+                <tr>
+                    <th>
+                        <span style="display: block; text-align: center;">用户级联影响力(Ic)</span>
+                    </th>
+                    <td id="Ic"></td>
+                </tr>
+                <tr>
+                    <th>
+                        <span style="display: block; text-align: center;">用户绝对影响力(Ia)</span>
+                    </th>
+                    <td id="Ia"></td>
+                </tr>
+                <tr>
+                    <th>
+                        <span style="display: block; text-align: center;">用户相对影响力(I)</span>
+                    </th>
+                    <td id="I"></td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    
 </div>
-
-
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-
-<script type="text/javascript" src="../static/jquery-1.11.0.min.js"></script>
-<script src="../static/highcharts/js/highcharts.js"></script>
-<script src="../static/highstock/js/modules/exporting.js"></script>
 <script src="../static/js/influence.js"></script>

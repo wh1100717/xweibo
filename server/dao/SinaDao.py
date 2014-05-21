@@ -64,7 +64,9 @@ def user_info(r):
 		'location':r['location'],
 		'followers_count':r['followers_count'],#粉丝数
 		'friends_count':r['friends_count'],#关注数
-		'statuses_count':r['statuses_count'] #微博数
+		'statuses_count':r['statuses_count'],#微博数
+		'created_at':r['created_at'],#用户创建时间
+		'verified':r['verified']#是否为加V用户
 	}
 	InfoCollection.insert(info)
 	return info

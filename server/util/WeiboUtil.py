@@ -93,7 +93,9 @@ def get_userinfo_by_screen_name(my_screen_name):
 
 def get_friend_location_by_screen_name(my_screen_name):
     client = get_client()
+    print my_screen_name
     friend_location = client.friendships.followers.get(screen_name=my_screen_name,count=200)
+    print friend_location
     return friend_location
 def trends_weekly():
     
