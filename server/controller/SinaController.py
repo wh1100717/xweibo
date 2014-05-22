@@ -306,22 +306,37 @@ def get_info_by_id(report_ids):
 class GetInfluence:
     def GET(self):
         data = SinaDao.getmyinfo()
-        print data
+        # print data
         repost_count = SinaDao.getfriendinfo()
-        print repost_count
-        reposts = '['
+        # print repost_count
+        idstr = data['idstr']
+        screen_name = data['screen_name']
+        allrepost=0
         for i in repost_count:
-            reposts += str(i['Repost_Intimacy'])+","
-        reposts=reposts[:-1] + ']'
-
+            allrepost+=i['Repost_Intimacy']
+        #把reposts的值存在oldcontroller中  不过这个坏处就是需要每次点击这个方法才会好使
         Ie = data['friends_count']*data['statuses_count']
-        Ic = len(reposts)
+        Ic = allrepost*data['friends_count']
         Ia = Ie + Ic
-        I = 0
+        Ib = 1
 
-        influence = '{u"Ie":'+str(Ie)+',u"Ic":'+str(Ic)+',u"Ia":'+str(Ia)+',u"I":'+str(I)+'}'
-        print influence
-        return influence
+        # influence = '{u"Ie":'+str(Ie)+',u"Ic":'+str(Ic)+',u"Ia":'+str(Ia)+',u"I":'+str(I)+'}'
+        SinaDao.old_save_info(idstr,screen_name,Ie,Ic,Ia,Ib)
+        influences = SinaDao.get_old_info()
+        data=[]
+        
+        for influence in influences:
+            print "====="
+            print influence
+            data.append({"screen_name":unicode(str(influence['screen_name']), "utf-8"),
+                "Ie":str(influence['Ie']),
+                "Ic":str(influence['Ic']),
+                "Ia":str(influence['Ia']),
+                "I":str(influence["Ib"])})
+        # print data
+        result={}
+        result['data']=data
+        return result
 
 
 

@@ -113,3 +113,6 @@ def statuses_count(weibo_id):
     client = get_client()
     r = client.statuses.count.get(ids=weibo_id)
     return r
+def zhaoqing_influence():
+    users_counts
+    

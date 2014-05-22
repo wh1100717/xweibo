@@ -6,6 +6,7 @@ InfoCollection = MongodbUtil.db.info
 LocationCollection = MongodbUtil.db.location
 UserWeiboCollection = MongodbUtil.db.userweibo
 NewestCollection = MongodbUtil.db.newest
+OldCollection =MongodbUtil.db.olduser
 # def save_weibo_info(weibo_info_lists):
 # 	SqliteUtil.checkTableExist()
 # 	sql="insert into weibo_info (text,created_data,reposts_count,comments_count,attitudes_count) values (?,?,?,?,?)"
@@ -36,6 +37,8 @@ def repost_user_info(r):
 			user['Repost_Intimacy'] = 1
 			user['Comment_Intimacy']= 0
 			UserCollection.insert(user)
+
+
 
 #评论的用户信息
 def comment_user_info(r):
@@ -69,6 +72,7 @@ def user_info(r):
 		'verified':r['verified']#是否为加V用户
 	}
 	InfoCollection.insert(info)
+	
 	return info
 def getmyinfo():
 	data = InfoCollection.find_one({},{'_id':0})
@@ -108,6 +112,29 @@ def save_weibo_info(r):
 		UserWeiboCollection.insert(weibo_info)
 def getweibo():
 	return UserWeiboCollection.find({},{'_id':0})
+def old_save_info(strid,screen_name,Ie,Ic,Ia,Ib):
+	old_user_info=OldCollection.find_one({'strid':strid})
+	if old_user_info == None:
+		old_info={
+			'screen_name':screen_name,
+			'strid':strid,
+			'Ie':Ie,
+			'Ic':Ic,
+			'Ia':Ia,
+			'Ib':Ib
+		}
+		OldCollection.insert(old_info)
+	else:
+		old_user_info['Ie']=Ie
+		old_user_info['Ic']=Ic
+		old_user_info['Ia']=Ia
+		old_user_info['Ib']=Ib
+		OldCollection.update({'strid':strid},old_user_info)
+
+def get_old_info():
+	data = OldCollection.find({},{'_id':0,'screen_name':1,'Ie':1,'Ic':1,'Ia':1,'Ib':1})
+	return data
+
 # def get_intimacy():
 # 	user_infos = UserCollection.find()
 # 	for user_info in user_infos:
