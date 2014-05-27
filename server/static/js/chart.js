@@ -87,6 +87,9 @@ $(function() {
           }
         ]
       });
+      setTimeout(function() {
+        return console.log($('.highcharts-contextmenu').html());
+      }, 2000);
     }
   });
 });

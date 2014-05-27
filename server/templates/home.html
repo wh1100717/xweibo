@@ -4,8 +4,8 @@
             <div class="col-md-9">
                 <div class="intro animate fadeIn">
                     <h1 style="color:#B8B6B6">社交网络舆情监督系统<small>V1.0</small></h1>
-                    <p class="lead">Social Network Public Opinion Monitoring System is mainly designed for regulatory spread of social networks and the influence of public opinion.</p>
-                    <a href="https://github.com/wh1100717/xweibo" target="_blank" class="demo-button">View Demo on Github</a>
+                    <p class="lead">社交网络舆情监督系统主要针对社交网络进行舆情监控及影响力控制</p>
+                    <a href="https://github.com/wh1100717/xweibo" target="_blank" class="demo-button">在Github上查看源代码</a>
                     <!--<a class="btn btn-lg btn-primary" href="" role="button">Fork on GitHub »</a>-->
                 </div>
             </div>
@@ -15,39 +15,55 @@
 <section class="what-we-do">
     <div class="container">
         <div class="section-title">
-            <span>WHAT WE DO</span>
+            <span>我们都可以做什么</span>
         </div>
         <div class="row">
             <div class="col-md-4">
-                <h2>Friends</h2>
-                <P>We can get:friends geographical distribution,the number of reposts and comments,the information of friends,the number of friends,etc.</P>
+                <h2>朋友圈</h2>
+                <P>我们可以得到用户的好友数量、好友的信息、好友转发和评论用户微博的数量以及好友的地理位置信息等信息</P>
             </div>
             <div class="col-md-4">
-                <h2>Micro-Bo</h2>
-                <p>We can get the number of micro-Bo released within a week by Sina API.Through word clustering method, compared with the hot words, get the matching degree;The curves of the number of the reposted-micro-Bo over time.</p>
+                <h2>微博</h2>
+                <p>我们可以得到用户的最新微博的实时转发和评论的数量；得到新浪微博官方发布的一周内热点词汇，将用户一周内的微博内容进行词聚类处理得到用户微博关键词汇，两者对比得到热点关注的匹配量</p>
             </div>
             <div class="col-md-4">
-                <h2>Influence</h2>
-                <p>We use an improved algorithm based on pagerank algorithm to get people's influence in Social Network.</p>
+                <h2>影响力</h2>
+                <p>我们使用一种基于PageRank的改进算法进行计算，从而得到用户的影响力</p>
             </div>
         </div>
-        <a href="https://github.com/wh1100717/xweibo">See our process <i class="icon-angle-right"></i></a>
+        <!-- <a href="https://github.com/wh1100717/xweibo">See our process <i class="icon-angle-right"></i></a> -->
     </div>
 </section>
 
 <section class="featured-work">
     <div class="container">
         <div class="section-title">
-            <span>Let's start!</span>
+            <span>那就开始吧</span>
         </div>
         <div class="row">
             <form action="/sina/userinfo" method="post">
-            <div class="row" style="margin-top: 88px; margin-bottom: 88px;">
+            <div class="row" style="margin-top: 50px; margin-bottom: 40px;">
                 <label class="col-sm-4 control-label no-padding-right" for="form-field-1" style="text-align: right;">
                     用户昵称
                 </label>
                 <div class="col-sm-4">
-                    <input type="text" id='screen_name'placeholder="昵称" class="col-xs-10 col-sm-10" name="screen_name"/>
+                    <input type="text" id='screen_name'placeholder="用户昵称" class="col-xs-10 col-sm-10" name="screen_name"/>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
+                <label class="col-sm-4 control-label no-padding-right" for="form-field-1" style="text-align: right;">
+                    登录名
+                </label>
+                <div class="col-sm-4">
+                    <input type="text" id='userid'placeholder="用户名" class="col-xs-10 col-sm-10" name="userid"/>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 40px; margin-bottom: 88px;">
+                <label class="col-sm-4 control-label no-padding-right" for="form-field-1" style="text-align: right;">
+                    用户密码
+                </label>
+                <div class="col-sm-4">
+                    <input type="password" id='passwd'placeholder="密码" class="col-xs-10 col-sm-10" name="passwd"/>
                 </div>
 
                 <div class="col-sm-4" style="text-align: left;">

@@ -7,6 +7,9 @@ LOGIN_INFO={
     'AUTH_URL' : 'https://api.weibo.com/oauth2/authorize',
     'USERID' : 'miggle_3@sina.com',
     'PASSWD' : 'APTX4869',
+    # 'USERID' : 'zhaoqing0320@sohu.com',
+    # 'PASSWD' : 'zhao@920320',
+    # 'USERID' :  
 }
 
 # LOGIN_INFO={
@@ -16,6 +19,15 @@ LOGIN_INFO={
 #     'AUTH_URL' : 'https://api.weibo.com/oauth2/authorize',
 #     'USERID' : 'zhaoqing0320@sohu.com',
 #     'PASSWD' : 'zhao@920320',
+# }
+
+# LOGIN_INFO={
+#     'APP_KEY' : '799529386',
+#     'APP_SECRET' : 'bc100c5cdaae0194829ad26d9f03b9fc',
+#     'CALLBACK_URL': 'https://api.weibo.com/oauth2/default.html',
+#     'AUTH_URL' : 'https://api.weibo.com/oauth2/authorize',
+#     'USERID' : '794383285@qq.com',
+#     'PASSWD' : 'APTX4869',
 # }
 def get_base_path():
     '''

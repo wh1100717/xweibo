@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import settings
 import web
 import json
 from weibo import APIClient
@@ -62,6 +62,8 @@ urls = (
 class SetUserInfo:
     def POST(self):
         i = web.input()
+        settings.LOGIN_INFO['USERID'] = i.userid
+        settings.LOGIN_INFO['PASSWD'] = i.passwd
         SinaDao.clean_info_db()
         userinfo = WeiboUtil.get_userinfo_by_screen_name(i.screen_name)
         SinaDao.user_info(userinfo)
@@ -340,23 +342,23 @@ class GetInfluence:
 
 
 
-class GetUserInfo:
-    def GET(self):
-        data = SinaDao.getmyinfo()
-        if data['verified']:
-            data['verified'] = u'是'
-        else:
-            data['verified'] = u'否'
+# class GetUserInfo:
+#     def GET(self):
+#         data = SinaDao.getmyinfo()
+#         if data['verified']:
+#             data['verified'] = u'是'
+#         else:
+#             data['verified'] = u'否'
 
-        stime = data['created_at'].split(" ")
+#         stime = data['created_at'].split(" ")
         
 
-        data['created_at'] = str(stime[5])+u"年"+str(StringUtil.converttime(stime[1]))+u"月"+str(stime[2])+u"日"+StringUtil.convertweek(stime[0])+stime[3]
-        print data
-        result = {}
-        for i in data:
-            result[str(i)]=data[i]
-        return str(result).replace('\'','\"')
+#         data['created_at'] = str(stime[5])+u"年"+str(StringUtil.converttime(stime[1]))+u"月"+str(stime[2])+u"日"+StringUtil.convertweek(stime[0])+stime[3]
+#         print data
+#         result = {}
+#         for i in data:
+#             result[str(i)]=data[i]
+#         return str(result).replace('\'','\"')
 
 
 

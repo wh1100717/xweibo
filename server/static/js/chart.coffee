@@ -86,6 +86,10 @@ $ ->
                     }
                 ]
             }
+            setTimeout ->
+                console.log $('.highcharts-contextmenu').html()
+            , 2000
+            
 
             return        
     }
